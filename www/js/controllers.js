@@ -550,6 +550,19 @@ angular.module('wpApp.controllers', [])
 
 })
 
+
+.controller('BackupCtrl', function($scope, $stateParams, SitesDB, InstallService) {
+  $scope.backups = [];
+
+  SitesDB.getSite($stateParams.siteId).then(function(site) {
+    InstallService.getBackups(site.account, site.install).then(function(response) {
+      $scope.backups = response.data.checkpoints;
+    });
+  });
+
+})
+
+
 .controller('ErrorLogsCtrl', function($scope, $stateParams, SitesDB, InstallService) {
 
   SitesDB.getSite($stateParams.siteId).then(function(site) {
