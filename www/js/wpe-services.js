@@ -2,7 +2,7 @@
 var servicesApp = angular.module('wpApp.services');
 
 servicesApp.service('InstallService', function($http) {
-  var baseUrl = 'http://10.10.68.101:3000/'
+  var baseUrl = 'http://mypreview.wpengine.com'
 
   this.getForAccount = function(accountName) {
     // TODO:  Hard coded IPs...
