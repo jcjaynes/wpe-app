@@ -163,6 +163,16 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
     }
   })
 
+  .state('app.error_logs', {
+    url: "/sites/:siteId/install/:itemId/error_logs",
+    views: {
+      'stats-view': {
+        templateUrl: "templates/error_logs.html",
+        controller: 'ErrorLogsCtrl'
+      }
+    }
+  })
+
   .state('app.notifications', {
     url: "/notifications",
     views: {

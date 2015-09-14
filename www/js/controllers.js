@@ -7,7 +7,7 @@ angular.module('wpApp.controllers', [])
 .controller('AppCtrl', function($scope, $rootScope, $localstorage ) {
 
   // Controller for main view, anything global should go here
-  
+
   $rootScope.increment = function() {
     var i = $localstorage.get('increment');
     if(!i) {
@@ -19,7 +19,7 @@ angular.module('wpApp.controllers', [])
       return i;
     }
   }
-  
+
   $rootScope.callback = '_jsonp=JSON_CALLBACK';
 
 })
@@ -146,7 +146,7 @@ angular.module('wpApp.controllers', [])
 
 		// Default sections, can be passed in from somewhere else
 		$scope.sitesections = [{'title': { 'rendered': 'Comments' }, 'icon':'ion-ios-chatbubble-outline', 'route':'/wp/v2/comments/' }, {'title': { 'rendered': 'Posts' }, 'icon':'ion-ios-browsers-outline', 'route':'/wp/v2/posts/' },{'title': { 'rendered': 'Pages' }, 'icon':'ion-ios-paper-outline', 'route':'/wp/v2/pages/'}];
-		
+
 		var dataURL = url + '/wp-json/wp-app/v1/app/?' + $rootScope.callback;
 
 		// Example of adding a section
@@ -191,7 +191,7 @@ angular.module('wpApp.controllers', [])
     var slugindex = $rootScope.route.split('/').length - 2;
     $scope.slug = slug[slugindex];
   }
-  
+
   // Gets API data
   $scope.loadData = function() {
 
@@ -224,7 +224,7 @@ angular.module('wpApp.controllers', [])
 
   // Load data on page load
   $scope.loadData();
-  
+
   paged = 2;
   $scope.moreItems = true;
 
@@ -273,7 +273,7 @@ angular.module('wpApp.controllers', [])
 
   // Pull to refresh
   $scope.doRefresh = function() {
-  
+
     console.log('Refreshing!');
 
     $timeout( function() {
@@ -282,9 +282,9 @@ angular.module('wpApp.controllers', [])
 
       //Stop the ion-refresher from spinning
       $scope.$broadcast('scroll.refreshComplete');
-    
+
     }, 1000);
-      
+
   }
 
 })
@@ -453,9 +453,9 @@ angular.module('wpApp.controllers', [])
   $scope.siteID = $stateParams.siteId;
   $scope.slug = $stateParams.slug;
   $scope.itemID = $stateParams.itemId;
-  
+
   var url = $rootScope.site.url;
-  
+
   if (!CacheFactory.get( 'site' + $scope.siteID + $scope.slug )) {
     // Create cache
     CacheFactory.createCache( 'site' + $scope.siteID + $scope.slug );
@@ -543,6 +543,11 @@ angular.module('wpApp.controllers', [])
 
 })
 
+.controller('ErrorLogsCtrl', function($scope ) {
+
+
+})
+
 .controller('StatsCtrl', function($scope ) {
 
   // This is our data for stats.html
@@ -603,7 +608,7 @@ angular.module('wpApp.controllers', [])
   $ionicViewService.nextViewOptions({
     disableBack: true
   });
- 
+
   // Called to navigate to the main app
   $scope.startApp = function() {
     $state.go('app.posts');
