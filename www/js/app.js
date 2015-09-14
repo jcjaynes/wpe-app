@@ -121,6 +121,16 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
       }
     }
   })
+  
+  .state('app.install', {
+	  url: "/sites/:siteId/install/:itemId",
+	  views: {
+	  	'sites-view': {
+			templateUrl: "templates/install-usage.html",
+			controller: 'InstallCtrl'
+		}
+	  }
+  })
 
   // Default state for all custom added pages
   .state('app.apppages', {

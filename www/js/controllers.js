@@ -526,6 +526,23 @@ angular.module('wpApp.controllers', [])
 
 })
 
+.controller('InstallCtrl', function($scope ) {
+
+  // This is our data for stats.html
+
+  // Need this stuff if canvas element does not have attributes for data, options, etc.
+  // var ctx = document.getElementById("line").getContext("2d");
+  // var myNewChart = new Chart(ctx).Line(data, options);
+
+  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+  $scope.series = ['2014', '2015'];
+  $scope.data = [
+      [65, 59, 80, 81, 56, 55, 40],
+      [28, 48, 40, 19, 86, 27, 90]
+  ];
+
+})
+
 .controller('StatsCtrl', function($scope ) {
 
   // This is our data for stats.html
