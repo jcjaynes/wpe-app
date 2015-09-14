@@ -22,7 +22,7 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, CacheFactoryProvider) {
 
-  angular.extend(CacheFactoryProvider.defaults, { 
+  angular.extend(CacheFactoryProvider.defaults, {
     'storageMode': 'localStorage',
     'capacity': 100
   })
@@ -121,15 +121,25 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
       }
     }
   })
-  
+
   .state('app.install', {
 	  url: "/sites/:siteId/install/",
 	  views: {
 	  	'sites-view': {
 			templateUrl: "templates/install-usage.html",
 			controller: 'InstallCtrl'
-		}
+		  }
 	  }
+  })
+
+  .state('app.logs', {
+    url: "/sites/:siteId/logs/",
+    views: {
+      'sites-view': {
+        templateUrl: "templates/logs.html",
+        controller: 'LogsCtrl'
+      }
+    }
   })
 
   // Default state for all custom added pages
@@ -142,7 +152,7 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
       }
     }
   })
-  
+
   .state('app.account', {
     url: "/account",
     views: {
@@ -152,7 +162,7 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
       }
     }
   })
-  
+
   .state('app.usage', {
     url: "/account/usage/",
     views: {
@@ -162,8 +172,8 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
       }
     }
   })
-  
-  .state('app.invocies', {
+
+  .state('app.invoices', {
     url: "/account/invoices/",
     views: {
       'account-view': {
@@ -172,7 +182,7 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
       }
     }
   })
-  
+
   .state('app.status', {
     url: "/status",
     views: {
@@ -189,16 +199,6 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
       'stats-view': {
         templateUrl: "templates/stats.html",
         controller: 'StatsCtrl'
-      }
-    }
-  })
-
-  .state('app.error_logs', {
-    url: "/sites/:siteId/install/:itemId/error_logs",
-    views: {
-      'stats-view': {
-        templateUrl: "templates/error_logs.html",
-        controller: 'ErrorLogsCtrl'
       }
     }
   })

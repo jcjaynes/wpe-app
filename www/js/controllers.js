@@ -549,7 +549,7 @@ angular.module('wpApp.controllers', [])
 
 })
 
-.controller('ErrorLogsCtrl', function($scope ) {
+.controller('LogsCtrl', function($scope ) {
 
 
 })
