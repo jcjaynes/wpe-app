@@ -5,17 +5,33 @@
   <ion-content>
   <div ng-bind-html="content"></div>
   	<ion-list>
+		<div class="item item-divider">WP Engine Controls</div>
+		<ion-item class="item-icon-left item-icon-right" href="#/app/settings/{{id}}" ng-click"$state.go('app.sitesettings')">
+			<i class="icon ion-arrow-graph-up-right site-icon"></i>
+			<h3>Install Stats</h3>
+			<i class="icon ion-chevron-right icon-accessory"></i>
+		</ion-item>
+		<ion-item class="item-icon-left item-icon-right" href="#/app/settings/{{id}}" ng-click"$state.go('app.sitesettings')">
+			<i class="icon ion-gear-a site-icon"></i>
+			<h3>Backup/Restore Site</h3>
+			<i class="icon ion-chevron-right icon-accessory"></i>
+		</ion-item>
+		<ion-item class="item-icon-left item-icon-right" href="#/app/settings/{{id}}/{{slug}}" ng-click"apiRoute('/wp/v2/users/')">
+			<i class="icon ion-person site-icon"></i>
+			<h3>WordPress Admin Users</h3>
+			<i class="icon ion-chevron-right icon-accessory"></i>
+		</ion-item>
+		<ion-item class="item-icon-left item-icon-right" href="#/app/settings/{{id}}" ng-click"$state.go('app.sitesettings')">
+			<i class="icon ion-alert-circled site-icon"></i>
+			<h3>Error Logs</h3>
+			<i class="icon ion-chevron-right icon-accessory"></i>
+		</ion-item>
+		<div class="item item-divider">WordPress Site Controls</div>
 		<ion-item class="item-icon-left item-icon-right" ng-repeat="section in sitesections" href="#/app/sites/{{id}}/{{slug}}" ng-click="apiRoute('{{section.route}}')">
 			<i class="icon {{section.icon}} site-icon"></i>
 			<h3>{{section.title.rendered}}</h3>
 			<i class="icon ion-chevron-right icon-accessory"></i>
 		</ion-item>
 	</ion-list>
-	<div class="item-divider"></div>
-		<ion-item class="item-icon-left item-icon-right" href="#/app/settings/{{id}}" ng-click"$state.go('app.sitesettings')">
-			<i class="icon ion-gear-a site-icon"></i>
-			<h3>Settings</h3>
-			<i class="icon ion-chevron-right icon-accessory"></i>
-		</ion-item>
   </ion-content>
 </ion-view>

@@ -113,16 +113,16 @@ angular.module('wpApp.services', [])
       return $http.jsonp( url );
     },
     getAuth: function(base64, url) {
-
-      $http.defaults.headers.common['Authorization'] = 'Basic ' + base64;
+	  //TODO: Removing because we don't need basic auth and it creates CORS issue. Make configurable through grunt.
+      //$http.defaults.headers.common['Authorization'] = 'Basic ' + base64;
 
       var req = { method: 'GET', url: url }
 
       return $http( req );
     },
     put: function(base64, url, options) {
-
-      $http.defaults.headers.common['Authorization'] = 'Basic ' + base64;
+	  //TODO: Removing because we don't need basic auth and it creates CORS issue. Make configurable through grunt.      
+      //$http.defaults.headers.common['Authorization'] = 'Basic ' + base64;
 
       var req = { 
         method: 'PUT', 
@@ -133,8 +133,8 @@ angular.module('wpApp.services', [])
       return $http( req );
     },
     delete: function(base64, url) {
-
-      $http.defaults.headers.common['Authorization'] = 'Basic ' + base64;
+      //TODO: Removing because we don't need basic auth and it creates CORS issue. Make configurable through grunt.
+      //$http.defaults.headers.common['Authorization'] = 'Basic ' + base64;
 
       var req = {
        method: 'DELETE',
