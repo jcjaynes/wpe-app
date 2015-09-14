@@ -526,6 +526,12 @@ angular.module('wpApp.controllers', [])
 
 })
 
+.controller('StatusCtrl', function($scope ) {
+
+	// TODO : Add functionality
+
+})
+
 .controller('InstallCtrl', function($scope ) {
 
   // This is our data for stats.html

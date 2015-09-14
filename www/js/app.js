@@ -123,7 +123,7 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
   })
   
   .state('app.install', {
-	  url: "/sites/:siteId/install/:itemId",
+	  url: "/sites/:siteId/install/",
 	  views: {
 	  	'sites-view': {
 			templateUrl: "templates/install-usage.html",
@@ -149,6 +149,36 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
       'account-view': {
         templateUrl: "templates/account.html",
         controller: 'AcctCtrl'
+      }
+    }
+  })
+  
+  .state('app.usage', {
+    url: "/account/usage/",
+    views: {
+      'account-view': {
+        templateUrl: "templates/plan-usage.html",
+        controller: 'AcctCtrl'
+      }
+    }
+  })
+  
+  .state('app.invocies', {
+    url: "/account/invoices/",
+    views: {
+      'account-view': {
+        templateUrl: "templates/invoices.html",
+        controller: 'AcctCtrl'
+      }
+    }
+  })
+  
+  .state('app.status', {
+    url: "/status",
+    views: {
+      'status-view': {
+        templateUrl: "templates/status.html",
+        controller: 'StatusCtrl'
       }
     }
   })
