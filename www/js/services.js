@@ -14,7 +14,7 @@ angular.module('wpApp.services', [])
     getObject: function(key) {
       return JSON.parse($window.localStorage[key] || '{}');
     }
-  }
+  };
 }])
 
 .factory('Base64', function() {
@@ -227,7 +227,7 @@ angular.module('wpApp.services', [])
 			}
 		}
 	}
-	
+
 	// Binary search, the array is by default sorted by _id.
 	function findIndex( array, id ) {
 		var low = 0, high = array.length, mid;
@@ -237,5 +237,5 @@ angular.module('wpApp.services', [])
 		}
 		return low;
 	}
-	
+
 }]);
