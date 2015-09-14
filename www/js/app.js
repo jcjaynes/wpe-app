@@ -152,6 +152,36 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
       }
     }
   })
+  
+  .state('app.usage', {
+    url: "/account/usage/",
+    views: {
+      'account-view': {
+        templateUrl: "templates/plan-usage.html",
+        controller: 'AcctCtrl'
+      }
+    }
+  })
+  
+  .state('app.invocies', {
+    url: "/account/invoices/",
+    views: {
+      'account-view': {
+        templateUrl: "templates/invoices.html",
+        controller: 'AcctCtrl'
+      }
+    }
+  })
+  
+  .state('app.status', {
+    url: "/status",
+    views: {
+      'status-view': {
+        templateUrl: "templates/status.html",
+        controller: 'StatusCtrl'
+      }
+    }
+  })
 
   .state('app.stats', {
     url: "/stats",
