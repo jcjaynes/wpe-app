@@ -24,13 +24,17 @@ angular.module('wpApp.controllers', [])
 
 })
 
-.controller('SitesCtrl', function( $scope, $http, DataLoader, $timeout, $rootScope, $ionicModal, $localstorage, $ionicLoading, CacheFactory, $ionicPlatform, SitesDB ) {
+.controller('SitesCtrl', function( $scope, $http, DataLoader, $timeout, $rootScope, $ionicModal, $localstorage, $ionicLoading, CacheFactory, $ionicPlatform, SitesDB, InstallService ) {
 
   // Sites view: templates/sites.html
 
   // Initialize the database
   $ionicPlatform.ready( function() {
-	 SitesDB.initDB();
+    SitesDB.initDB();
+
+    $scope.account = {
+      name: ''
+    };
 
 	 // Get all the sites from the database.
 	 SitesDB.getAllSites().then( function( sites ) {
@@ -57,41 +61,27 @@ angular.module('wpApp.controllers', [])
     $scope.sitemodal = sitemodal;
   });
 
-  $scope.stripTrailingSlash = function(str) {
-    if(str.substr(-1) == '/') {
-        return str.substr(0, str.length - 1);
-    }
-    return str;
-  };
-
-
   // Import a list of installs for an account
-  $scope.importInstalls = function(account) {
+  $scope.importInstalls = function() {
 
     $ionicLoading.show({
       noBackdrop: true
     });
 
-    // TODO:  Make the call to get install info for account.name
-    var installs = [
-      {
-        domain: 'http://justinharr.is'
-      },
-      {
-        domain: 'http://jaynesfamily.wpengine.com'
-      }
-    ];
+    // TODO:  Underscore plz
+    var domains = [];
+    angular.forEach($scope.sites, function(site) {
+      domains.push(site.url);
+    });
 
+    InstallService.getForAccount($scope.account.name).then(function(response) {
+      angular.forEach(response.data.installs, function(install) {
+        var siteURL = 'http://' + install.name + '.wpengine.com';
 
-    SitesDB.getAllSites().then(function(sites) {
-      var domains = [];
+        if (install.primary_domain) {
+          siteURL = 'http://' + install.primary_domain;
+        }
 
-      angular.forEach(sites, function(site) {
-        domains.push(site.url);
-      });
-
-      angular.forEach(installs, function(install) {
-        var siteURL = $scope.stripTrailingSlash(install.domain);
         var siteApi = siteURL + '/wp-json/' + '?' + $rootScope.callback;
 
         if (domains.indexOf(siteURL) === -1) {
@@ -104,8 +94,8 @@ angular.module('wpApp.controllers', [])
 
               SitesDB.addSite(site);
             }, function(response) {
-              // TODO:  Fix this up
-              alert('Please make sure the WP-API plugin v2 is installed on your site.');
+              //alert('Please make sure the WP-API plugin v2 is installed on your site.');
+              // TODO:  Emit a friendlier warning
               console.log('Site Factory error');
           });
         }
