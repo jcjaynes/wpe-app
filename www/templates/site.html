@@ -16,14 +16,19 @@
 			<h3>Backup/Restore Site</h3>
 			<i class="icon ion-chevron-right icon-accessory"></i>
 		</ion-item>
-		<ion-item class="item-icon-left item-icon-right" href="#/app/settings/{{id}}/{{slug}}" ng-click"apiRoute('/wp/v2/users/')">
-			<i class="icon ion-person site-icon"></i>
-			<h3>WordPress Admin Users</h3>
-			<i class="icon ion-chevron-right icon-accessory"></i>
-		</ion-item>
 		<ion-item class="item-icon-left item-icon-right" href="#/app/settings/{{id}}" ng-click"$state.go('app.sitesettings')">
 			<i class="icon ion-alert-circled site-icon"></i>
 			<h3>Error Logs</h3>
+			<i class="icon ion-chevron-right icon-accessory"></i>
+		</ion-item>
+		<ion-item class="item-icon-left item-icon-right" href="#/app/settings/{{id}}" ng-click"$state.go('app.sitesettings')">
+			<i class="icon ion-settings site-icon"></i>
+			<h3>Utilities</h3>
+			<i class="icon ion-chevron-right icon-accessory"></i>
+		</ion-item>
+		<ion-item class="item-icon-left item-icon-right" href="#/app/settings/{{id}}/{{slug}}" ng-click"apiRoute('/wp/v2/users/')">
+			<i class="icon ion-person site-icon"></i>
+			<h3>WordPress Admin Users</h3>
 			<i class="icon ion-chevron-right icon-accessory"></i>
 		</ion-item>
 		<div class="item item-divider">WordPress Site Controls</div>

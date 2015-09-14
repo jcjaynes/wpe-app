@@ -132,6 +132,16 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
       }
     }
   })
+  
+  .state('app.account', {
+    url: "/account",
+    views: {
+      'account-view': {
+        templateUrl: "templates/account.html",
+        controller: 'AcctCtrl'
+      }
+    }
+  })
 
   .state('app.stats', {
     url: "/stats",

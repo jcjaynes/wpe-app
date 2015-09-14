@@ -150,7 +150,7 @@ angular.module('wpApp.controllers', [])
     $rootScope.site = site;
 
 		// Example data
-		$scope.content = '<img src="img/male-circle-512.png" class="site-avatar" /><h2 class="padding">' + site.title + '</h2>';
+		$scope.content = '<img src="img/wpengine-logo-black.png" class="site-avatar" /><h2 class="padding">' + site.title + '</h2>';
 
 		var url = site.url;
 
@@ -527,6 +527,12 @@ angular.module('wpApp.controllers', [])
       $scope.loadChart( $scope.siteData.chart );
     }
   }
+
+})
+
+.controller('AcctCtrl', function($scope ) {
+
+	// TODO : Add functionality
 
 })
 
