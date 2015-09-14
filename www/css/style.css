@@ -1,3 +1,11 @@
+.bar.bar-calm {
+	background-color: #40bac8;
+}
+
+.tabs-calm > .tabs, .tabs.tabs-calm, .tabs-striped.tabs-calm .tabs {
+	background-color: #40bac8;	
+}
+
 .item-content p.post-excerpt {
 	white-space: wrap;
 }
