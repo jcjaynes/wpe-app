@@ -27,16 +27,16 @@ angular.module('wpApp.controllers', [])
 .controller('SitesCtrl', function( $scope, $http, DataLoader, $timeout, $rootScope, $ionicModal, $localstorage, $ionicLoading, CacheFactory, $ionicPlatform, SitesDB ) {
 
   // Sites view: templates/sites.html
-  
+
   // Initialize the database
   $ionicPlatform.ready( function() {
-	 SitesDB.initDB(); 
-	 
+	 SitesDB.initDB();
+
 	 // Get all the sites from the database.
 	 SitesDB.getAllSites().then( function( sites ) {
 		 $scope.sites = sites;
 	 });
-	 
+
 	 SitesDB.count().then( function( count ) {
 		if ( count > 0 ) {
 			$scope.message = '';
@@ -45,11 +45,11 @@ angular.module('wpApp.controllers', [])
 		}
 	 });
   });
-  
+
   if ( ! CacheFactory.get('siteCache') ) {
 	  CacheFactory.createCache('siteCache');
   }
-  
+
   // Add a site modal
   $ionicModal.fromTemplateUrl('templates/add-site-modal.html', {
     scope: $scope
@@ -62,60 +62,73 @@ angular.module('wpApp.controllers', [])
         return str.substr(0, str.length - 1);
     }
     return str;
-  }
-  
-  $scope.createSite = function(u) { 
+  };
 
-    // Called when "create site" button is pressed
 
-    if(!u.username || !u.password || !u.url ) {
-      alert('Please fill in all fields.');
-      return;
-    }
+  // Import a list of installs for an account
+  $scope.importInstalls = function(account) {
 
     $ionicLoading.show({
       noBackdrop: true
     });
 
-    var siteURL = $scope.stripTrailingSlash( u.url );
+    // TODO:  Make the call to get install info for account.name
+    var installs = [
+      {
+        domain: 'http://justinharr.is'
+      },
+      {
+        domain: 'http://jaynesfamily.wpengine.com'
+      }
+    ];
 
-    var siteApi = siteURL + '/wp-json/' + '?' + $rootScope.callback;
 
-    DataLoader.get( siteApi ).then(function(response) {
+    SitesDB.getAllSites().then(function(sites) {
+      var domains = [];
 
-        var site = { title: response.data.name, description: response.data.description, url: siteURL, username: u.username, password: u.password };
+      angular.forEach(sites, function(site) {
+        domains.push(site.url);
+      });
 
-        // Add site to cache
-        SitesDB.addSite( site );
+      angular.forEach(installs, function(install) {
+        var siteURL = $scope.stripTrailingSlash(install.domain);
+        var siteApi = siteURL + '/wp-json/' + '?' + $rootScope.callback;
 
-        // TODO: clear form fields here
+        if (domains.indexOf(siteURL) === -1) {
+          DataLoader.get(siteApi).then(function(response) {
+              var site = {
+                title: response.data.name,
+                description: response.data.description,
+                url: siteURL
+              };
 
-        $ionicLoading.hide();
-      }, function(response) {
-        $ionicLoading.hide();
-        alert('Please make sure the WP-API plugin v2 is installed on your site.');
-        console.log('Site Factory error');
+              SitesDB.addSite(site);
+            }, function(response) {
+              // TODO:  Fix this up
+              alert('Please make sure the WP-API plugin v2 is installed on your site.');
+              console.log('Site Factory error');
+          });
+        }
+      });
+
     });
 
+    $ionicLoading.hide();
     $scope.sitemodal.hide();
-
-    $scope.message = '';
-    
   };
+
+
 
   $scope.onItemDelete = function(item) {
 
-    // console.log('Deleting site: ' + item.id);
-	    
     angular.forEach( window.localStorage, function( value, key ) {
 	    // find and delete all site[id] caches (pages,posts,comments,etc)
 	    if ( key.indexOf( 'site' + item._id ) >= 0 ) {
 		    window.localStorage.removeItem( key );
 	    }
     })
-    
-    SitesDB.deleteSite( item );
 
+    SitesDB.deleteSite(item);
   }
 
 })
@@ -126,11 +139,11 @@ angular.module('wpApp.controllers', [])
 
   // Site ID
   $scope.id = $stateParams.siteId;
-  
+
   // Initialize the database.
   $ionicPlatform.ready( function() {
 	 SitesDB.initDB();
-	 
+
 	 SitesDB.getSite( $scope.id ).then( function( site ) {
 
     // Add this to rootScope so we don't have to make a DB call in other controllers
@@ -138,14 +151,14 @@ angular.module('wpApp.controllers', [])
 
 		// Example data
 		$scope.content = '<img src="img/male-circle-512.png" class="site-avatar" /><h2 class="padding">' + site.title + '</h2>';
-		
+
 		var url = site.url;
-		
+
 		// Default sections, can be passed in from somewhere else
 		$scope.sitesections = [{'title': { 'rendered': 'Comments' }, 'icon':'ion-ios-chatbubble-outline', 'route':'/wp/v2/comments/' }, {'title': { 'rendered': 'Posts' }, 'icon':'ion-ios-browsers-outline', 'route':'/wp/v2/posts/' },{'title': { 'rendered': 'Pages' }, 'icon':'ion-ios-paper-outline', 'route':'/wp/v2/pages/'}, {'title': { 'rendered': 'Users' }, 'icon':'ion-person', 'route':'/wp/v2/users/'}];
-		
+
 		var dataURL = url + '/wp-json/wp-app/v1/app/?' + $rootScope.callback;
-		
+
 		// Example of adding a section
 		DataLoader.get( dataURL ).then(function(response) {
 
@@ -156,7 +169,7 @@ angular.module('wpApp.controllers', [])
           $scope.sitesections.push({ 'title': { 'rendered': value.title.rendered }, 'icon': value.icon, 'route': value.route });
 
         });
-		    
+
 		    $ionicLoading.hide();
 		  }, function(response) {
 		    $ionicLoading.hide();
@@ -476,7 +489,7 @@ angular.module('wpApp.controllers', [])
 
       var ctx = document.getElementById("myChart").getContext("2d");
       var myNewChart = new Chart(ctx).Line( data );
-    
+
     }, 1000);
 
   }
@@ -509,7 +522,7 @@ angular.module('wpApp.controllers', [])
     // Item exists, use localStorage
     $scope.siteData = dataCache.get( $scope.itemID );
     $scope.content = $sce.trustAsHtml( $scope.siteData.content.rendered );
-    
+
     if($scope.siteData.chart) {
       $scope.loadChart( $scope.siteData.chart );
     }
@@ -539,11 +552,11 @@ angular.module('wpApp.controllers', [])
   // Individual site settings, settings.html
   $scope.settings = {};
   //$scope.site = $rootScope.siteCache.get($stateParams.siteId);
-  
+
   // Initialize the database.
   $ionicPlatform.ready( function() {
    SitesDB.initDB();
-   
+
    SitesDB.getSite( $stateParams.siteId ).then( function( site ) {
      $scope.site = site;
      $scope.siteTitle = $scope.site.title;
@@ -552,7 +565,7 @@ angular.module('wpApp.controllers', [])
      $scope.settings.password = $scope.site.password;
    });
   });
-  
+
 
   //$scope.$on( '$ionicView.leave', $scope.saveSettings );
 
@@ -562,12 +575,11 @@ angular.module('wpApp.controllers', [])
     $scope.site.username = $scope.settings.username;
     $scope.site.password = $scope.settings.password;
     //console.log($scope.site);
-    
+
     SitesDB.updateSite( $scope.site ).then( function() {
       alert('Saved!');
-  });
-    
-  }
+    });
+  };
 
 })
 
