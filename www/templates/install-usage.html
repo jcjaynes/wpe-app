@@ -1,12 +1,16 @@
-<ion-view view-title="Account">
+<ion-view view-title="{{ site.title }} Usage">
   <ion-content>
   	<div class="card">
-        <div class="item item-divider">
-            Sales
-        </div>
-        <div class="item item-text-wrap">
-            <canvas id="line" class="chart chart-line" data="data" labels="labels" legend="true" series="series" options="{showTooltips: false}"></canvas>
-        </div>
+      <div class="item item-divider">Visitors</div>
+      <div class="item item-text-wrap">
+        <canvas id="visitors" class="chart chart-line" data="visitorData" labels="labels" options="{showTooltips: false}"></canvas>
+      </div>
+    </div>
+  	<div class="card">
+      <div class="item item-divider">Bandwidth (GB)</div>
+      <div class="item item-text-wrap">
+        <canvas id="bandwidth" class="chart chart-line" data="bandwidthData" labels="labels" options="{showTooltips: false}"></canvas>
+      </div>
     </div>
   </ion-content>
 </ion-view>

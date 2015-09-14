@@ -89,7 +89,9 @@ angular.module('wpApp.controllers', [])
               var site = {
                 title: response.data.name,
                 description: response.data.description,
-                url: siteURL
+                url: siteURL,
+                account: $scope.account.name,
+                install: install.name
               };
 
               SitesDB.addSite(site);
@@ -526,20 +528,25 @@ angular.module('wpApp.controllers', [])
 
 })
 
-.controller('InstallCtrl', function($scope ) {
+.controller('InstallCtrl', function($scope, $stateParams, SitesDB, InstallService) {
 
-  // This is our data for stats.html
+  $scope.labels = Array.apply(null, Array(30)).map(function (_, i) {
+    if (i % 5 == 0) {
+      return 30 - i;
+    } else {
+      return '';
+    }
+  });
 
-  // Need this stuff if canvas element does not have attributes for data, options, etc.
-  // var ctx = document.getElementById("line").getContext("2d");
-  // var myNewChart = new Chart(ctx).Line(data, options);
+  $scope.visitorData = [[]];
+  $scope.bandwidthData = [[]];
 
-  $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-  $scope.series = ['2014', '2015'];
-  $scope.data = [
-      [65, 59, 80, 81, 56, 55, 40],
-      [28, 48, 40, 19, 86, 27, 90]
-  ];
+  SitesDB.getSite($stateParams.siteId).then(function(site) {
+    InstallService.getStats(site.account, site.install).then(function(response) {
+      $scope.visitorData[0] = response.data.last_30_days_visitors;
+      $scope.bandwidthData[0] = response.data.last_30_days_bandwidth_gb;
+    });
+  });
 
 })
 
