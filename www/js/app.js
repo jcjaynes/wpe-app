@@ -132,12 +132,12 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
 	  }
   })
 
-  .state('app.logs', {
-    url: "/sites/:siteId/logs/",
+  .state('app.error_logs', {
+    url: "/sites/:siteId/error-logs/",
     views: {
       'sites-view': {
-        templateUrl: "templates/logs.html",
-        controller: 'LogsCtrl'
+        templateUrl: "templates/error-logs.html",
+        controller: 'ErrorLogsCtrl'
       }
     }
   })

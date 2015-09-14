@@ -17,4 +17,10 @@ servicesApp.service('InstallService', function($http) {
     return $http.get(statsUrl);
   }
 
+
+  this.getErrorLogs = function(accountName, installName) {
+    var errorsUrl = baseUrl + '/api/accounts/' + accountName + '/installs/' + installName + '/error_logs?wpe_apikey=devkey';
+
+    return $http.get(errorsUrl);
+  }
 });

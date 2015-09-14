@@ -550,8 +550,13 @@ angular.module('wpApp.controllers', [])
 
 })
 
-.controller('LogsCtrl', function($scope ) {
+.controller('ErrorLogsCtrl', function($scope, $stateParams, SitesDB, InstallService) {
 
+  SitesDB.getSite($stateParams.siteId).then(function(site) {
+    InstallService.getErrorLogs(site.account, site.install).then(function(response) {
+      $scope.errors = response.data.errors;
+    });
+  });
 
 })
 
