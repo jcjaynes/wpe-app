@@ -123,7 +123,7 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
   })
   
   .state('app.install', {
-	  url: "/sites/:siteId/install/:itemId",
+	  url: "/sites/:siteId/install/",
 	  views: {
 	  	'sites-view': {
 			templateUrl: "templates/install-usage.html",
