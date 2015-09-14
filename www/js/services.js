@@ -146,28 +146,11 @@ angular.module('wpApp.services', [])
 
 })
 
-.factory('$localstorage', ['$window', function($window) {
-  return {
-    set: function(key, value) {
-      $window.localStorage[key] = value;
-    },
-    get: function(key, defaultValue) {
-      return $window.localStorage[key] || defaultValue;
-    },
-    setObject: function(key, value) {
-      $window.localStorage[key] = JSON.stringify(value);
-    },
-    getObject: function(key) {
-      return JSON.parse($window.localStorage[key] || '{}');
-    }
-  }
-}])
-
 .factory('SitesDB', ['$q', function( $q ) {
-	
+
 	var _db;
 	var _sites;
-	
+
 	return {
 		initDB: initDB,
 		addSite: addSite,
@@ -177,38 +160,38 @@ angular.module('wpApp.services', [])
 		getSite: getSite,
 		count: count,
 	};
-	
+
 	function initDB() {
 		// Creates the database or opens if it already exists.
 		_db = new PouchDB('sites');
 	};
-	
+
 	function addSite( site ) {
 		return $q.when( _db.post( site ) );
 	}
-	
+
 	function updateSite( site ) {
 		return $q.when( _db.put( site ) );
 	}
-	
+
 	function deleteSite( site ) {
 		return $q.when( _db.remove( site ) );
 	}
-	
+
 	function getAllSites() {
 		if ( ! _sites ) {
 			return $q.when( _db.allDocs({ include_docs: true }))
 				.then( function( docs ) {
-					
+
 					// Map the array to contain just the doc objects.
 					_sites = docs.rows.map( function( row ) {
 						return row.doc;
 					});
-					
+
 					// Listen for changes on the database.
 					_db.changes({ live: true, since: 'now', include_docs: true })
 						.on('change', onDatabaseChange);
-					
+
 					return _sites;
 				});
 		} else {
@@ -216,22 +199,22 @@ angular.module('wpApp.services', [])
 			return $q.when( _sites );
 		}
 	}
-	
+
 	function getSite( id ) {
 		return $q.when( _db.get( id ) );
 	}
-	
+
 	function count() {
 		return $q.when( _db.info())
 			.then( function( info ) {
 				return info.doc_count;
 			});
 	}
-	
+
 	function onDatabaseChange( change ) {
 		var index = findIndex( _sites, change.id );
 		var site = _sites[ index ];
-		
+
 		if ( change.deleted ) {
 			if ( site ) {
 				_sites.splice( index, 1 ); // delete
