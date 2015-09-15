@@ -109,8 +109,6 @@ angular.module('wpApp.controllers', [])
     $scope.sitemodal.hide();
   };
 
-
-
   $scope.onItemDelete = function(item) {
 
     angular.forEach( window.localStorage, function( value, key ) {
@@ -122,7 +120,6 @@ angular.module('wpApp.controllers', [])
 
     SitesDB.deleteSite(item);
   }
-
 })
 
 .controller('SiteCtrl', function($scope, $stateParams, $ionicLoading, $localstorage, $rootScope, DataLoader, $state, $ionicPlatform, SitesDB ) {
@@ -175,7 +172,6 @@ angular.module('wpApp.controllers', [])
   $scope.apiRoute = function(route) {
     $rootScope.route = route;
   }
-
 })
 
 .controller('SiteSectionCtrl', function($scope, $stateParams, DataLoader, $ionicLoading, $rootScope, $localstorage, $timeout, $ionicPlatform, SitesDB, Base64, CacheFactory ) {
@@ -213,7 +209,6 @@ angular.module('wpApp.controllers', [])
         $ionicLoading.hide();
 
     });
-
   }
 
   var options = '';
@@ -286,11 +281,10 @@ angular.module('wpApp.controllers', [])
       $scope.$broadcast('scroll.refreshComplete');
 
     }, 1000);
-
   }
-
 })
 
+//WordPress Site Controls
 .controller('CommentCtrl', function($scope, $stateParams, DataLoader, $ionicLoading, $rootScope, $localstorage, CacheFactory, SitesDB, Base64, $sce, $ionicHistory ) {
 
   console.log('CommentCtrl');
@@ -522,10 +516,9 @@ angular.module('wpApp.controllers', [])
 
 })
 
-.controller('AcctCtrl', function($scope ) {
-
+//WPEngine Controls
+.controller('AcctCtrl', function($scope) {
 	// TODO : Add functionality
-
 })
 
 .controller('InstallCtrl', function($scope, $stateParams, SitesDB, InstallService) {
@@ -547,7 +540,6 @@ angular.module('wpApp.controllers', [])
       $scope.bandwidthData[0] = response.data.last_30_days_bandwidth_gb;
     });
   });
-
 })
 
 .controller('ErrorLogsCtrl', function($scope, $stateParams, SitesDB, InstallService) {
@@ -557,7 +549,6 @@ angular.module('wpApp.controllers', [])
       $scope.errors = response.data.errors;
     });
   });
-
 })
 
 .controller('StatsCtrl', function($scope ) {
@@ -575,6 +566,13 @@ angular.module('wpApp.controllers', [])
       [28, 48, 40, 19, 86, 27, 90]
   ];
 
+})
+
+.controller('StatusCtrl', function($scope, InstallService) {  
+	InstallService.getStatusFeed('https://wpenginestatus.com/feed/').then(function(response) {
+		$scope.feed = response.data.responseData.feed.entries;
+		console.log($scope.feed);
+	});
 })
 
 .controller('SiteSettingsCtrl', function($scope, $stateParams, DataLoader, $ionicLoading, $rootScope, $ionicPlatform, SitesDB ) {
