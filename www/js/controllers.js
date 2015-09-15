@@ -521,8 +521,8 @@ angular.module('wpApp.controllers', [])
 })
 
 //WPEngine Controls
-.controller('AcctCtrl', function($scope) {
-	// TODO : Add functionality
+.controller('AcctCtrl', function($scope, $stateParams, InstallService, SitesDB) {
+
 })
 
 .controller('PlanUsageCtrl', function($scope, $localstorage, $ionicLoading, AccountService) {
@@ -562,6 +562,16 @@ angular.module('wpApp.controllers', [])
     }
 
     $ionicLoading.hide();
+  });
+})
+
+
+.controller('InvoicesCtrl', function($scope, $localstorage, InstallService) {
+  var account = $localstorage.get('accountName');
+  $scope.invoices = [];
+
+  InstallService.getInvoices(account).then(function(response) {
+    $scope.invoices = response.data.invoices;
   });
 })
 
@@ -652,7 +662,6 @@ angular.module('wpApp.controllers', [])
   };
 
 })
-
 
 .controller('ErrorLogsCtrl', function($scope, $stateParams, SitesDB, InstallService, $localstorage) {
   $scope.id = $stateParams.siteId;

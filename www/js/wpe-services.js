@@ -3,11 +3,24 @@ var servicesApp = angular.module('wpApp.services');
 
 servicesApp.service('InstallService', function($http) {
   var baseUrl = 'http://mypreview.wpengine.com';
+  var baseUrl = 'http://localhost:3000';
 
   this.getForAccount = function(accountName) {
     var installUrl = baseUrl + '/api/accounts/' + accountName + '/installs/?wpe_apikey=devkey';
 
     return $http.get(installUrl);
+  };
+
+  this.getInvoices = function(accountName) {
+    var invoicesUrl = baseUrl + '/api/accounts/' + accountName + '/installs/invoices/?wpe_apikey=devkey';
+
+    return $http.get(invoicesUrl);
+  };
+
+  this.getInvoice = function(accountName, invoiceID) {
+    var invoiceUrl = baseUrl + '/api/accounts/' + accountName + '/installs/invoice?id=' + invoiceID + '&wpe_apikey=devkey';
+
+    return $http.get(invoiceUrl);
   };
 
   this.getStats = function(accountName, installName) {
