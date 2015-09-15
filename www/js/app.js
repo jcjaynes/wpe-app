@@ -172,6 +172,16 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
     }
   })
 
+  .state('app.utilities', {
+    url: "/sites/:siteId/utilities/",
+    views: {
+      'sites-view': {
+        templateUrl: "templates/utilities.html",
+        controller: 'UtilitiesCtrl'
+      }
+    }
+  })
+
   // Default state for all custom added pages
   .state('app.apppages', {
     url: "/sites/:siteId/:slug/:itemId",

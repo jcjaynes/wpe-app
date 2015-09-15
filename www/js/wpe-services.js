@@ -39,4 +39,11 @@ servicesApp.service('InstallService', function($http) {
 
     return $http.post(backupsUrl);
   };
+
+  this.purgeCache = function(accountName, installName) {
+    var purgeCacheUrl = baseUrl + '/api/accounts/' + accountName + '/installs/' + installName + '/purge_cache?wpe_apikey=devkey';
+      console.log(purgeCacheUrl)
+    return $http.post(purgeCacheUrl);
+  };
+
 });

@@ -623,6 +623,37 @@ angular.module('wpApp.controllers', [])
   }
 })
 
+.controller('UtilitiesCtrl', function($scope, $stateParams, $ionicLoading, $ionicPopup, InstallService, SitesDB) {
+  var site;
+  $scope.id = $stateParams.siteId;
+
+  SitesDB.getSite($stateParams.siteId).then(function(s) {
+    site = s;
+  });
+
+  $scope.purge_cache = function() {
+    if (confirm('Are you sure you want to purge cache?')) {
+      $ionicLoading.show({
+        template: 'Purging...'
+      });
+        
+
+      InstallService.purgeCache(site.account, site.install)
+        .then(function() {
+          $ionicLoading.hide();
+        })
+        .catch(function() {
+          $ionicLoading.hide();
+
+          $ionicPopup.alert({
+             title: 'Error',
+             template: 'There was a problem purging your cache.'
+           });
+        });
+    }
+  };
+})
+
 .controller('StatsCtrl', function($scope ) {
 
   // This is our data for stats.html
