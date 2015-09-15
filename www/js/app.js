@@ -42,16 +42,6 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
     controller: 'AppCtrl'
   })
 
-  // .state('app.intro', {
-  //   url: "/intro",
-  //   views: {
-  //     'menuContent': {
-  //       templateUrl: "templates/intro.html",
-  //       controller: 'IntroCtrl'
-  //     }
-  //   }
-  // })
-
   .state('app.sites', {
     url: "/sites",
     views: {
@@ -198,7 +188,7 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
     views: {
       'account-view': {
         templateUrl: "templates/plan-usage.html",
-        controller: 'AcctCtrl'
+        controller: 'PlanUsageCtrl'
       }
     }
   })

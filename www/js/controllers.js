@@ -74,6 +74,10 @@ angular.module('wpApp.controllers', [])
       domains.push(site.url);
     });
 
+    // TODO:  This is pretty hacky - this should probably
+    //        use the same DB mechanism as the sites
+    $localstorage.set('accountName', $scope.account.name);
+
     InstallService.getForAccount($scope.account.name).then(function(response) {
       angular.forEach(response.data.installs, function(install) {
         var siteURL = 'http://' + install.name + '.wpengine.com';
@@ -521,6 +525,40 @@ angular.module('wpApp.controllers', [])
 	// TODO : Add functionality
 })
 
+.controller('PlanUsageCtrl', function($scope, $localstorage, $ionicLoading, AccountService) {
+  var account = $localstorage.get('accountName');
+
+  $ionicLoading.show({
+    template: 'Loading Plan...'
+  });
+
+  AccountService.getUsage(account).then(function(response) {
+    var usage = response.data;
+    $scope.plan = AccountService.planForUsage(usage);
+
+    $scope.labels = ['Used', 'Remaining'];
+    $scope.currentData = [
+      usage.current_billing_cycle.overage_data.usage,
+      Math.max(0,
+        usage.current_billing_cycle.overage_data.plan -
+        usage.current_billing_cycle.overage_data.usage
+      )
+    ];
+    $scope.currentOverage = usage.current_billing_cycle.overage_data.overage;
+
+    $scope.previousData = [
+      usage.previous_billing_cycle.overage_data.usage,
+      Math.max(0,
+        usage.previous_billing_cycle.overage_data.plan -
+        usage.previous_billing_cycle.overage_data.usage
+      )
+    ];
+    $scope.previousOverage = usage.previous_billing_cycle.overage_data.overage;
+
+    $ionicLoading.hide();
+  });
+})
+
 .controller('InstallCtrl', function($scope, $stateParams, SitesDB, InstallService) {
 
   $scope.labels = Array.apply(null, Array(30)).map(function (_, i) {
@@ -559,7 +597,6 @@ angular.module('wpApp.controllers', [])
 .controller('BackupCtrl', function($scope, $stateParams, $ionicLoading, $ionicPopup, SitesDB, InstallService) {
   var site;
   $scope.backup = {};
-  $scope.restoring = false;
 
   // TODO:  Super inefficient - we are getting the whole list again
   //        Can we just put this on the scope?
@@ -702,30 +739,5 @@ angular.module('wpApp.controllers', [])
     });
   };
 
-})
-
-.controller('IntroCtrl', function($scope, $state, $ionicSlideBoxDelegate, $ionicViewService) {
-
-  // Might use this intro for final app
-
-  $ionicViewService.nextViewOptions({
-    disableBack: true
-  });
-
-  // Called to navigate to the main app
-  $scope.startApp = function() {
-    $state.go('app.posts');
-  };
-  $scope.next = function() {
-    $ionicSlideBoxDelegate.next();
-  };
-  $scope.previous = function() {
-    $ionicSlideBoxDelegate.previous();
-  };
-
-  // Called each time the slide changes
-  $scope.slideChanged = function(index) {
-    $scope.slideIndex = index;
-  };
-
 });
+
