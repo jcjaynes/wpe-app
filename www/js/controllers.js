@@ -626,10 +626,12 @@ angular.module('wpApp.controllers', [])
 
 })
 
-.controller('StatusCtrl', function($scope, InstallService) {  
+.controller('StatusCtrl', function($scope, InstallService, Base64) { 	
 	InstallService.getStatusFeed('https://wpenginestatus.com/feed/').then(function(response) {
-		$scope.feed = response.data.responseData.feed.entries;
-		console.log($scope.feed);
+		$scope.data = response.data.responseData.feed.entries;
+        angular.forEach( $scope.data, function( value, key ) {
+			value.id = Base64.encode(value.publishedDate);
+        });
 	});
 })
 
