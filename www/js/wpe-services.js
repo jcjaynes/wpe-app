@@ -41,8 +41,7 @@ servicesApp.service('InstallService', function($http) {
 
 
 servicesApp.service('AccountService', function($http) {
-  //var baseUrl = 'http://mypreview.wpengine.com';
-  var baseUrl = 'http://10.10.69.217:3000';
+  var baseUrl = 'http://mypreview.wpengine.com';
 
   this.getUsage = function(accountName) {
     var usageUrl = baseUrl + '/api/accounts/' + accountName + '/installs/plan_usage?wpe_apikey=devkey';

@@ -1,9 +1,9 @@
 <ion-view view-title="Status">
   <ion-content>
   	<ion-list>
-		<ion-item class="item-icon-right" ng-repeat="post in feed">
-			<h2>{{post.title}}</h2>
-			<p>{{post.publishedDate}}</p>
+		<ion-item class="item-icon-right" ng-repeat="item in data" href="#/app/status/{{item.id}}">
+			<h2>{{item.title}}</h2>
+			<p>{{item.publishedDate}}</p>
 			<i class="icon ion-chevron-right icon-accessory"></i>
 		</ion-item>
 	</ion-list>
