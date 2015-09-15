@@ -137,6 +137,16 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
 	  views: {
 	  	'sites-view': {
 			templateUrl: "templates/backups.html",
+			controller: 'BackupsCtrl'
+		  }
+	  }
+  })
+
+  .state('app.backup', {
+	  url: "/sites/:siteId/backups/:commit",
+	  views: {
+	  	'sites-view': {
+			templateUrl: "templates/backup.html",
 			controller: 'BackupCtrl'
 		  }
 	  }

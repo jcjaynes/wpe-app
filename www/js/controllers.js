@@ -551,7 +551,8 @@ angular.module('wpApp.controllers', [])
 })
 
 
-.controller('BackupCtrl', function($scope, $stateParams, SitesDB, InstallService) {
+.controller('BackupsCtrl', function($scope, $stateParams, SitesDB, InstallService) {
+  $scope.id = $stateParams.siteId;
   $scope.backups = [];
 
   SitesDB.getSite($stateParams.siteId).then(function(site) {
@@ -559,6 +560,50 @@ angular.module('wpApp.controllers', [])
       $scope.backups = response.data.checkpoints;
     });
   });
+
+})
+
+
+.controller('BackupCtrl', function($scope, $stateParams, $ionicLoading, $ionicPopup, SitesDB, InstallService) {
+  var site;
+  $scope.backup = {};
+  $scope.restoring = false;
+
+  // TODO:  Super inefficient - we are getting the whole list again
+  //        Can we just put this on the scope?
+  SitesDB.getSite($stateParams.siteId).then(function(s) {
+    site = s;
+
+    InstallService.getBackups(site.account, site.install).then(function(response) {
+      angular.forEach(response.data.checkpoints, function(checkpoint) {
+        if (checkpoint.commit === $stateParams.commit) {
+          $scope.backup = checkpoint;
+        }
+      });
+    });
+  });
+
+  $scope.restore = function() {
+
+    if (confirm('Are you sure you want to restore?')) {
+      $ionicLoading.show({
+        template: 'Restoring...'
+      });
+
+      InstallService.backup(site.account, site.install, $scope.backup.commit)
+        .then(function() {
+          $ionicLoading.hide();
+        })
+        .catch(function() {
+          $ionicLoading.hide();
+
+          $ionicPopup.alert({
+             title: 'Error',
+             template: 'There was a problem restoring your backup.'
+           });
+        });
+    }
+  };
 
 })
 

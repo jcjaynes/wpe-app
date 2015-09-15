@@ -28,4 +28,10 @@ servicesApp.service('InstallService', function($http) {
 
     return $http.get(backupsUrl);
   };
+
+  this.backup = function(accountName, installName, commit) {
+    var backupsUrl = baseUrl + '/api/accounts/' + accountName + '/installs/' + installName + '/restore?wpe_apikey=devkey&checkpoint[commit_id]=' + commit;
+
+    return $http.post(backupsUrl);
+  };
 });

@@ -1,0 +1,10 @@
+<ion-view view-title="{{ site.title }} Backup">
+  <ion-content>
+    <div class="item item-divider">{{ backup.timestamp | date }}</div>
+    <ion-list>
+      <ion-item>{{ backup.comment }}</ion-item>
+      <ion-item>ID:  {{ backup.commit }}</ion-item>
+    </ion-list>
+    <button class="button button-full button-positive" ng-click="restore()">Restore</button>
+  </ion-content>
+</ion-view>
