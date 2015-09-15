@@ -3,6 +3,7 @@ var servicesApp = angular.module('wpApp.services');
 
 servicesApp.service('InstallService', function($http) {
   var baseUrl = 'http://mypreview.wpengine.com'
+  var baseUrl = '//10.10.69.217:3000'
 
   this.getForAccount = function(accountName) {
     // TODO:  Hard coded IPs...
@@ -22,7 +23,7 @@ servicesApp.service('InstallService', function($http) {
 
     return $http.get(errorsUrl);
   };
-  
+
   this.getStatusFeed = function(url) {
   	return $http.jsonp('//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=50&callback=JSON_CALLBACK&q=' + encodeURIComponent(url));
   };

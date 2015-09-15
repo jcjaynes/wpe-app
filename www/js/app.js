@@ -162,6 +162,16 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
     }
   })
 
+  .state('app.error', {
+    url: "/sites/:siteId/error-logs/:id",
+    views: {
+      'sites-view': {
+        templateUrl: "templates/error.html",
+        controller: 'ErrorsCtrl'
+      }
+    }
+  })
+
   // Default state for all custom added pages
   .state('app.apppages', {
     url: "/sites/:siteId/:slug/:itemId",

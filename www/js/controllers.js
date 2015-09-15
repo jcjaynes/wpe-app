@@ -600,13 +600,27 @@ angular.module('wpApp.controllers', [])
 })
 
 
-.controller('ErrorLogsCtrl', function($scope, $stateParams, SitesDB, InstallService) {
+.controller('ErrorLogsCtrl', function($scope, $stateParams, SitesDB, InstallService, $localstorage) {
+  $scope.id = $stateParams.siteId;
+  $scope.errors = [];
 
   SitesDB.getSite($stateParams.siteId).then(function(site) {
     InstallService.getErrorLogs(site.account, site.install).then(function(response) {
       $scope.errors = response.data.errors;
+      $localstorage.setObject('error-logs-' + $stateParams.siteId, $scope.errors);
     });
   });
+})
+
+.controller('ErrorsCtrl', function($scope, $stateParams, SitesDB, $localstorage) {
+  errors = $localstorage.getObject('error-logs-' + $stateParams.siteId);
+  
+  for ( var error_index in errors ){
+    var error = errors[error_index];
+    if ( $stateParams.id == error.id) {
+      $scope.error = error;
+    }
+  }
 })
 
 .controller('StatsCtrl', function($scope ) {
