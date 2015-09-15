@@ -80,6 +80,12 @@ servicesApp.service('AccountService', function($http) {
         installs: 150,
         visits: '1,000,000+',
         storage: '100-300'
+      },
+      comped: {
+        name: 'Comped',
+        installs: 1,
+        visits: '100,000',
+        storage: 10
       }
     };
 

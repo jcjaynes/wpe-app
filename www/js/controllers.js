@@ -537,23 +537,29 @@ angular.module('wpApp.controllers', [])
     $scope.plan = AccountService.planForUsage(usage);
 
     $scope.labels = ['Used', 'Remaining'];
-    $scope.currentData = [
-      usage.current_billing_cycle.overage_data.usage,
-      Math.max(0,
-        usage.current_billing_cycle.overage_data.plan -
-        usage.current_billing_cycle.overage_data.usage
-      )
-    ];
-    $scope.currentOverage = usage.current_billing_cycle.overage_data.overage;
 
-    $scope.previousData = [
-      usage.previous_billing_cycle.overage_data.usage,
-      Math.max(0,
-        usage.previous_billing_cycle.overage_data.plan -
-        usage.previous_billing_cycle.overage_data.usage
-      )
-    ];
-    $scope.previousOverage = usage.previous_billing_cycle.overage_data.overage;
+    try {
+      $scope.currentData = [
+        usage.current_billing_cycle.overage_data.usage,
+        Math.max(0,
+          usage.current_billing_cycle.overage_data.plan -
+          usage.current_billing_cycle.overage_data.usage
+        )
+      ];
+      $scope.currentOverage = usage.current_billing_cycle.overage_data.overage;
+
+      $scope.previousData = [
+        usage.previous_billing_cycle.overage_data.usage,
+        Math.max(0,
+          usage.previous_billing_cycle.overage_data.plan -
+          usage.previous_billing_cycle.overage_data.usage
+        )
+      ];
+      $scope.previousOverage = usage.previous_billing_cycle.overage_data.overage;
+    } catch(e) {
+      $scope.currentData = null;
+      $scope.previousData = null;
+    }
 
     $ionicLoading.hide();
   });
