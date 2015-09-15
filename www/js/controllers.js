@@ -669,25 +669,36 @@ angular.module('wpApp.controllers', [])
   });
 
   $scope.purge_cache = function() {
-    if (confirm('Are you sure you want to purge cache?')) {
-      $ionicLoading.show({
-        template: 'Purging...'
-      });
+    confirm_purge = $ionicPopup.confirm({
+      title: 'Are you sure you want to purge cache?',
+      template: ''
+    });
 
-
-      InstallService.purgeCache(site.account, site.install)
-        .then(function() {
-          $ionicLoading.hide();
-        })
-        .catch(function() {
-          $ionicLoading.hide();
-
-          $ionicPopup.alert({
-             title: 'Error',
-             template: 'There was a problem purging your cache.'
-           });
+    confirm_purge.then(function(confirmed){
+      if (confirmed) {
+        $ionicLoading.show({
+          template: 'Purging...'
         });
-    }
+
+
+        InstallService.purgeCache(site.account, site.install)
+          .then(function(respones) {
+            $ionicLoading.hide();
+            $ionicPopup.alert({
+               title: respones.data.message,
+               template: ''
+             });
+          })
+          .catch(function() {
+            $ionicLoading.hide();
+
+            $ionicPopup.alert({
+               title: 'Error',
+               template: 'There was a problem purging your cache.'
+             });
+          });
+      }
+    })
   };
 })
 

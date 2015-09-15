@@ -40,7 +40,6 @@ servicesApp.service('InstallService', function($http) {
 
   this.purgeCache = function(accountName, installName) {
     var purgeCacheUrl = baseUrl + '/api/accounts/' + accountName + '/installs/' + installName + '/purge_cache?wpe_apikey=devkey';
-      console.log(purgeCacheUrl)
     return $http.post(purgeCacheUrl);
   };
 
