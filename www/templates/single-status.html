@@ -1,0 +1,11 @@
+<ion-view>
+	<ion-nav-title>Status</ion-nav-title>
+  	<ion-content>
+	<div class="card">
+		<div class="item item-body">
+			<h2 ng-bind-html="item.title"></h2>
+			<p ng-if="item.content" ng-bind-html="item.content"></p>
+		</div>
+	</div>
+    </ion-content>
+</ion-view>

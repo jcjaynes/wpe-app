@@ -2,11 +2,9 @@
 var servicesApp = angular.module('wpApp.services');
 
 servicesApp.service('InstallService', function($http) {
-  var baseUrl = 'http://mypreview.wpengine.com'
-  var baseUrl = '//10.10.69.217:3000'
+  var baseUrl = 'http://mypreview.wpengine.com';
 
   this.getForAccount = function(accountName) {
-    // TODO:  Hard coded IPs...
     var installUrl = baseUrl + '/api/accounts/' + accountName + '/installs/?wpe_apikey=devkey';
 
     return $http.get(installUrl);
@@ -45,5 +43,56 @@ servicesApp.service('InstallService', function($http) {
       console.log(purgeCacheUrl)
     return $http.post(purgeCacheUrl);
   };
+
+});
+
+
+servicesApp.service('AccountService', function($http) {
+  var baseUrl = 'http://mypreview.wpengine.com';
+
+  this.getUsage = function(accountName) {
+    var usageUrl = baseUrl + '/api/accounts/' + accountName + '/installs/plan_usage?wpe_apikey=devkey';
+
+    return $http.get(usageUrl);
+  };
+
+  this.planForUsage = function(usage) {
+    var plans = {
+      personal: {
+        name: 'Personal',
+        installs: 1,
+        visits: '25,000',
+        storage: 10
+      },
+      professional: {
+        name: 'Professional',
+        installs: 10,
+        visits: '100,000',
+        storage: 20
+      },
+      business: {
+        name: 'Business',
+        installs: 25,
+        visits: '400,000',
+        storage: 30
+      },
+      premium: {
+        name: 'Premium',
+        installs: 150,
+        visits: '1,000,000+',
+        storage: '100-300'
+      }
+    };
+
+    var noPlan = {
+        name: 'No',
+        installs: 0,
+        visits: 0,
+        storage: 0
+    };
+
+    return plans[usage.current_billing_cycle.account.plan] || noPlan;
+  };
+
 
 });
