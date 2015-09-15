@@ -6,6 +6,16 @@
 	background-color: #40bac8;	
 }
 
+.button.button-positive {
+	border-color: #eb6126;
+	background-color: #eb6126;
+}
+
+.button.button-positive.activated {
+	border-color: #de8073;
+	background-color: #de8073;
+}
+
 .item-content p.post-excerpt {
 	white-space: wrap;
 }

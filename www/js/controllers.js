@@ -623,7 +623,7 @@ angular.module('wpApp.controllers', [])
   }
 })
 
-.controller('StatsCtrl', function($scope ) {
+.controller('StatsCtrl', function($scope) {
 
   // This is our data for stats.html
 
@@ -640,13 +640,32 @@ angular.module('wpApp.controllers', [])
 
 })
 
-.controller('StatusCtrl', function($scope, InstallService, Base64) { 	
+.controller('StatusFeedCtrl', function($scope, InstallService, Base64, $localstorage) { 
+	$scope.open = [];
+	$scope.resolved = [];
+		
 	InstallService.getStatusFeed('https://wpenginestatus.com/feed/').then(function(response) {
 		$scope.data = response.data.responseData.feed.entries;
         angular.forEach( $scope.data, function( value, key ) {
 			value.id = Base64.encode(value.publishedDate);
+			value.publishedDate = new Date(value.publishedDate);
+			if (value.title.indexOf("[Resolved]") >= 0) {
+				$scope.resolved.push(value);
+			} else {
+				$scope.open.push(value);
+			}
         });
+		$localstorage.setObject('status-feed', $scope.data);
 	});
+})
+
+.controller('StatusCtrl', function($scope, $stateParams, $localstorage) {
+	var id = $stateParams.itemId;
+	var data = $localstorage.getObject('status-feed').filter(function( obj ) {
+	  return obj.id == id;
+	});
+	$scope.item = data[0];
+	console.log($scope.item);
 })
 
 .controller('SiteSettingsCtrl', function($scope, $stateParams, DataLoader, $ionicLoading, $rootScope, $ionicPlatform, SitesDB ) {

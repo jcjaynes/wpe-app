@@ -213,14 +213,24 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
     }
   })
 
-  .state('app.status', {
+  .state('app.statusfeed', {
     url: "/status",
     views: {
       'status-view': {
-        templateUrl: "templates/status.html",
-        controller: 'StatusCtrl'
+        templateUrl: "templates/status-feed.html",
+        controller: 'StatusFeedCtrl'
       }
     }
+  })
+  
+  .state('app.status', {
+	  url: "/status/:itemId",
+	  views: {
+		  'status-view': {
+			  templateUrl: "templates/single-status.html",
+			  controller: 'StatusCtrl'
+		  }
+	  }  	
   })
 
   .state('app.stats', {
