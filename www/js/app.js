@@ -132,6 +132,26 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
 	  }
   })
 
+  .state('app.backups', {
+	  url: "/sites/:siteId/backups/",
+	  views: {
+	  	'sites-view': {
+			templateUrl: "templates/backups.html",
+			controller: 'BackupsCtrl'
+		  }
+	  }
+  })
+
+  .state('app.backup', {
+	  url: "/sites/:siteId/backups/:commit",
+	  views: {
+	  	'sites-view': {
+			templateUrl: "templates/backup.html",
+			controller: 'BackupCtrl'
+		  }
+	  }
+  })
+
   .state('app.error_logs', {
     url: "/sites/:siteId/error-logs/",
     views: {
