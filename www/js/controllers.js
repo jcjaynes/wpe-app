@@ -613,25 +613,36 @@ angular.module('wpApp.controllers', [])
   });
 
   $scope.restore = function() {
+    confirm_restore = $ionicPopup.confirm({
+      title: 'Are you sure you want to restore?',
+      template: ''
+    });
 
-    if (confirm('Are you sure you want to restore?')) {
-      $ionicLoading.show({
-        template: 'Restoring...'
-      });
+    confirm_restore.then(function(confirmed){
 
-      InstallService.backup(site.account, site.install, $scope.backup.commit)
-        .then(function() {
-          $ionicLoading.hide();
-        })
-        .catch(function() {
-          $ionicLoading.hide();
-
-          $ionicPopup.alert({
-             title: 'Error',
-             template: 'There was a problem restoring your backup.'
-           });
+      if (confirmed) {
+        $ionicLoading.show({
+          template: 'Restoring...'
         });
-    }
+
+        InstallService.backup(site.account, site.install, $scope.backup.commit)
+          .then(function(respones) {
+            $ionicLoading.hide();
+            $ionicPopup.alert({
+               title: respones.data.message,
+               template: ''
+             });
+          })
+          .catch(function() {
+            $ionicLoading.hide();
+
+            $ionicPopup.alert({
+               title: 'Error',
+               template: 'There was a problem restoring your backup.'
+             });
+          });
+      }
+    })
   };
 
 })
