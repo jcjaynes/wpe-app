@@ -577,6 +577,7 @@ angular.module('wpApp.controllers', [])
 
 .controller('InstallCtrl', function($scope, $stateParams, SitesDB, InstallService) {
 
+  $scope.series = ['Days Ago'];
   $scope.labels = Array.apply(null, Array(30)).map(function (_, i) {
     if (i % 5 == 0) {
       return 30 - i;

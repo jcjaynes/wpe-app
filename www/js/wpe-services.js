@@ -3,7 +3,6 @@ var servicesApp = angular.module('wpApp.services');
 
 servicesApp.service('InstallService', function($http) {
   var baseUrl = 'http://mypreview.wpengine.com';
-  var baseUrl = 'http://localhost:3000';
 
   this.getForAccount = function(accountName) {
     var installUrl = baseUrl + '/api/accounts/' + accountName + '/installs/?wpe_apikey=devkey';
