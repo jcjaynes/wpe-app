@@ -64,9 +64,9 @@ angular.module('wpApp.controllers', [])
   // Import a list of installs for an account
   $scope.importInstalls = function() {
 
-    $ionicLoading.show({
-      noBackdrop: true
-    });
+	  $ionicLoading.show({
+	    template: 'Loading Installs...'
+	  });
 
     // TODO:  Underscore plz
     var domains = [];
@@ -78,7 +78,7 @@ angular.module('wpApp.controllers', [])
     //        use the same DB mechanism as the sites
     $localstorage.set('accountName', $scope.account.name);
 
-    InstallService.getForAccount($scope.account.name).then(function(response) {
+    InstallService.getForAccount($scope.account.name).then(function(response) {		
       angular.forEach(response.data.installs, function(install) {
         var siteURL = 'http://' + install.name + '.wpengine.com';
 
@@ -106,10 +106,9 @@ angular.module('wpApp.controllers', [])
           });
         }
       });
-
+	  $ionicLoading.hide();
     });
 
-    $ionicLoading.hide();
     $scope.sitemodal.hide();
   };
 
@@ -637,14 +636,19 @@ angular.module('wpApp.controllers', [])
 })
 
 
-.controller('ErrorLogsCtrl', function($scope, $stateParams, SitesDB, InstallService, $localstorage) {
+.controller('ErrorLogsCtrl', function($scope, $stateParams, SitesDB, InstallService, $localstorage, $ionicLoading) {
   $scope.id = $stateParams.siteId;
   $scope.errors = [];
 
+  $ionicLoading.show({
+    template: 'Loading Errors...'
+  });
+  
   SitesDB.getSite($stateParams.siteId).then(function(site) {
     InstallService.getErrorLogs(site.account, site.install).then(function(response) {
       $scope.errors = response.data.errors;
       $localstorage.setObject('error-logs-' + $stateParams.siteId, $scope.errors);
+	  $ionicLoading.hide();
     });
   });
 })
@@ -677,9 +681,13 @@ angular.module('wpApp.controllers', [])
 
 })
 
-.controller('StatusFeedCtrl', function($scope, InstallService, Base64, $localstorage) { 
+.controller('StatusFeedCtrl', function($scope, InstallService, Base64, $localstorage, $ionicLoading) { 
 	$scope.open = [];
 	$scope.resolved = [];
+	
+    $ionicLoading.show({
+      template: 'Loading Status...'
+    });
 		
 	InstallService.getStatusFeed('https://wpenginestatus.com/feed/').then(function(response) {
 		$scope.data = response.data.responseData.feed.entries;
@@ -693,6 +701,7 @@ angular.module('wpApp.controllers', [])
 			}
         });
 		$localstorage.setObject('status-feed', $scope.data);
+		$ionicLoading.hide();
 	});
 })
 
