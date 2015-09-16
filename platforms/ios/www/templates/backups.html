@@ -1,0 +1,13 @@
+<ion-view view-title="{{ site.title }} Backups">
+  <ion-content>
+    <h4 class="padding">{{ site.title }} Backups</h4>
+    <ion-list>
+      <div ng-repeat="backup in backups">
+        <ion-item class="item-icon-right" href="#/app/sites/{{id}}/backups/{{backup.commit}}" ng-click"$state.go('app.backup')">
+        <span>{{ backup.comment }} - {{ backup.timestamp | date }}</span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </div>
+    </ion-list>
+  </ion-content>
+</ion-view>

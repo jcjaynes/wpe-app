@@ -1,0 +1,16 @@
+<ion-view view-title="{{ site.title }} Usage">
+  <ion-content>
+  	<div class="card">
+      <div class="item item-divider">Visitors - Last 30 Days</div>
+      <div class="item item-text-wrap">
+        <canvas id="visitors" class="chart chart-line" data="visitorData" labels="labels" series="series" legend="true" options="{showTooltips: false}"></canvas>
+      </div>
+    </div>
+  	<div class="card">
+      <div class="item item-divider">Bandwidth (GB) - Last 30 Days</div>
+      <div class="item item-text-wrap">
+        <canvas id="bandwidth" class="chart chart-line" data="bandwidthData" labels="labels" series="series" legend="true" options="{showTooltips: false}"></canvas>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,32 @@
+<ion-view view-title="Plan Usage">
+  <ion-content>
+    <div class="card">
+      <div class="item item-divider">{{ plan.name }} Plan</div>
+      <div class="item item-icon-left">
+        <i class="icon ion-gear-a"></i>
+        {{ plan.installs }} installs
+      </div>
+      <div class="item item-icon-left">
+        <i class="icon ion-person-stalker"></i>
+        {{ plan.visits }} visits per month
+      </div>
+      <div class="item item-icon-left">
+        <i class="icon ion-archive"></i>
+        {{ plan.storage }} GB local storage
+      </div>
+    </div>
+    <div class="card">
+      <div class="item item-divider">Visits This Period</div>
+      <div class="item">
+        <canvas id="current" class="chart chart-pie" data="currentData" labels="labels" legend="true"></canvas>
+        <div ng-show="currentOverage" style="text-align: center">Overage:  {{ currentOverage | number }} visits</div>
+      </div>
+
+      <div class="item item-divider">Visits Last Period</div>
+      <div class="item">
+        <canvas id="previous" class="chart chart-pie" data="previousData" labels="labels" legend="true"></canvas>
+        <div ng-show="previousOverage" style="text-align: center">Overage:  {{ previousOverage | number }} visits</div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
