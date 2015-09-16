@@ -567,8 +567,9 @@ angular.module('wpApp.controllers', [])
 
 
 .controller('InvoicesCtrl', function($scope, $localstorage, InstallService) {
-  var account = $localstorage.get('accountName');
+  var account = $scope.account_name = $localstorage.get('accountName');
   $scope.invoices = [];
+  $scope.base_url = InstallService.baseUrl
 
   InstallService.getInvoices(account).then(function(response) {
     $scope.invoices = response.data.invoices;
