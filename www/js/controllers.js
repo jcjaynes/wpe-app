@@ -521,7 +521,9 @@ angular.module('wpApp.controllers', [])
 })
 
 //WPEngine Controls
-.controller('AcctCtrl', function($scope, $stateParams, InstallService, SitesDB) {
+.controller('AcctCtrl', function($scope, $localstorage) {
+
+  $scope.account = $localstorage.get('accountName');
 
 })
 
