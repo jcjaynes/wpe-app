@@ -754,11 +754,11 @@ angular.module('wpApp.controllers', [])
 .controller('StatusFeedCtrl', function($scope, InstallService, Base64, $localstorage, $ionicLoading) { 
 	$scope.open = [];
 	$scope.resolved = [];
-	
-    $ionicLoading.show({
-      template: 'Loading Status...'
-    });
-		
+
+  $ionicLoading.show({
+    template: 'Loading Status...'
+  });
+
 	InstallService.getStatusFeed('https://wpenginestatus.com/feed/').then(function(response) {
 		$scope.data = response.data.responseData.feed.entries;
         angular.forEach( $scope.data, function( value, key ) {
