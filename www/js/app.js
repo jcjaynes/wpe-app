@@ -162,6 +162,16 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
     }
   })
 
+  .state('app.utilities', {
+    url: "/sites/:siteId/utilities/",
+    views: {
+      'sites-view': {
+        templateUrl: "templates/utilities.html",
+        controller: 'UtilitiesCtrl'
+      }
+    }
+  })
+
   // Default state for all custom added pages
   .state('app.apppages', {
     url: "/sites/:siteId/:slug/:itemId",
@@ -198,7 +208,17 @@ angular.module('wpApp', ['ionic','ionic.service.core', 'wpApp.controllers', 'wpA
     views: {
       'account-view': {
         templateUrl: "templates/invoices.html",
-        controller: 'AcctCtrl'
+        controller: 'InvoicesCtrl'
+      }
+    }
+  })
+  
+  .state('app.invoice', {
+    url: "/sites/invoices/:id",
+    views: {
+      'account-view': {
+      templateUrl: "templates/invoice.html",
+      controller: 'InvoicesCtrl'
       }
     }
   })

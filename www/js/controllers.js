@@ -520,8 +520,8 @@ angular.module('wpApp.controllers', [])
 })
 
 //WPEngine Controls
-.controller('AcctCtrl', function($scope) {
-	// TODO : Add functionality
+.controller('AcctCtrl', function($scope, $stateParams, InstallService, SitesDB) {
+
 })
 
 .controller('PlanUsageCtrl', function($scope, $localstorage, $ionicLoading, AccountService) {
@@ -536,30 +536,47 @@ angular.module('wpApp.controllers', [])
     $scope.plan = AccountService.planForUsage(usage);
 
     $scope.labels = ['Used', 'Remaining'];
-    $scope.currentData = [
-      usage.current_billing_cycle.overage_data.usage,
-      Math.max(0,
-        usage.current_billing_cycle.overage_data.plan -
-        usage.current_billing_cycle.overage_data.usage
-      )
-    ];
-    $scope.currentOverage = usage.current_billing_cycle.overage_data.overage;
 
-    $scope.previousData = [
-      usage.previous_billing_cycle.overage_data.usage,
-      Math.max(0,
-        usage.previous_billing_cycle.overage_data.plan -
-        usage.previous_billing_cycle.overage_data.usage
-      )
-    ];
-    $scope.previousOverage = usage.previous_billing_cycle.overage_data.overage;
+    try {
+      $scope.currentData = [
+        usage.current_billing_cycle.overage_data.usage,
+        Math.max(0,
+          usage.current_billing_cycle.overage_data.plan -
+          usage.current_billing_cycle.overage_data.usage
+        )
+      ];
+      $scope.currentOverage = usage.current_billing_cycle.overage_data.overage;
+
+      $scope.previousData = [
+        usage.previous_billing_cycle.overage_data.usage,
+        Math.max(0,
+          usage.previous_billing_cycle.overage_data.plan -
+          usage.previous_billing_cycle.overage_data.usage
+        )
+      ];
+      $scope.previousOverage = usage.previous_billing_cycle.overage_data.overage;
+    } catch(e) {
+      $scope.currentData = null;
+      $scope.previousData = null;
+    }
 
     $ionicLoading.hide();
   });
 })
 
+
+.controller('InvoicesCtrl', function($scope, $localstorage, InstallService) {
+  var account = $localstorage.get('accountName');
+  $scope.invoices = [];
+
+  InstallService.getInvoices(account).then(function(response) {
+    $scope.invoices = response.data.invoices;
+  });
+})
+
 .controller('InstallCtrl', function($scope, $stateParams, SitesDB, InstallService) {
 
+  $scope.series = ['Days Ago'];
   $scope.labels = Array.apply(null, Array(30)).map(function (_, i) {
     if (i % 5 == 0) {
       return 30 - i;
@@ -612,29 +629,39 @@ angular.module('wpApp.controllers', [])
   });
 
   $scope.restore = function() {
+    confirm_restore = $ionicPopup.confirm({
+      title: 'Are you sure you want to restore?',
+      template: ''
+    });
 
-    if (confirm('Are you sure you want to restore?')) {
-      $ionicLoading.show({
-        template: 'Restoring...'
-      });
+    confirm_restore.then(function(confirmed){
 
-      InstallService.backup(site.account, site.install, $scope.backup.commit)
-        .then(function() {
-          $ionicLoading.hide();
-        })
-        .catch(function() {
-          $ionicLoading.hide();
-
-          $ionicPopup.alert({
-             title: 'Error',
-             template: 'There was a problem restoring your backup.'
-           });
+      if (confirmed) {
+        $ionicLoading.show({
+          template: 'Restoring...'
         });
-    }
+
+        InstallService.backup(site.account, site.install, $scope.backup.commit)
+          .then(function(respones) {
+            $ionicLoading.hide();
+            $ionicPopup.alert({
+               title: respones.data.message,
+               template: ''
+             });
+          })
+          .catch(function() {
+            $ionicLoading.hide();
+
+            $ionicPopup.alert({
+               title: 'Error',
+               template: 'There was a problem restoring your backup.'
+             });
+          });
+      }
+    })
   };
 
 })
-
 
 .controller('ErrorLogsCtrl', function($scope, $stateParams, SitesDB, InstallService, $localstorage, $ionicLoading) {
   $scope.id = $stateParams.siteId;
@@ -655,7 +682,7 @@ angular.module('wpApp.controllers', [])
 
 .controller('ErrorsCtrl', function($scope, $stateParams, SitesDB, $localstorage) {
   errors = $localstorage.getObject('error-logs-' + $stateParams.siteId);
-  
+
   for ( var error_index in errors ){
     var error = errors[error_index];
     if ( $stateParams.id == error.id) {
@@ -664,7 +691,49 @@ angular.module('wpApp.controllers', [])
   }
 })
 
-.controller('StatsCtrl', function($scope) {
+.controller('UtilitiesCtrl', function($scope, $stateParams, $ionicLoading, $ionicPopup, InstallService, SitesDB) {
+  var site;
+  $scope.id = $stateParams.siteId;
+
+  SitesDB.getSite($stateParams.siteId).then(function(s) {
+    site = s;
+  });
+
+  $scope.purge_cache = function() {
+    confirm_purge = $ionicPopup.confirm({
+      title: 'Are you sure you want to purge cache?',
+      template: ''
+    });
+
+    confirm_purge.then(function(confirmed){
+      if (confirmed) {
+        $ionicLoading.show({
+          template: 'Purging...'
+        });
+
+
+        InstallService.purgeCache(site.account, site.install)
+          .then(function(respones) {
+            $ionicLoading.hide();
+            $ionicPopup.alert({
+               title: respones.data.message,
+               template: ''
+             });
+          })
+          .catch(function() {
+            $ionicLoading.hide();
+
+            $ionicPopup.alert({
+               title: 'Error',
+               template: 'There was a problem purging your cache.'
+             });
+          });
+      }
+    })
+  };
+})
+
+.controller('StatsCtrl', function($scope ) {
 
   // This is our data for stats.html
 

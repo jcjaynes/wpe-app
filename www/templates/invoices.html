@@ -1,5 +1,12 @@
-<ion-view view-title="Invoices">
+<ion-view view-title="{{ site.title }} Invoices">
   <ion-content>
-	Add Invoice Data
+    <ion-list>
+      <div ng-repeat="invoice in invoices">
+        <ion-item class="item-icon-right" href="#/app/account/invoices/{{invoice.id}}" ng-click"$state.go('app.invoice')">
+        <span>{{ invoice.number }} - {{ invoice.date | date }} - {{ invoice.total | currency }}</span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </div>
+    </ion-list>
   </ion-content>
 </ion-view>

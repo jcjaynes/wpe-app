@@ -10,6 +10,18 @@ servicesApp.service('InstallService', function($http) {
     return $http.get(installUrl);
   };
 
+  this.getInvoices = function(accountName) {
+    var invoicesUrl = baseUrl + '/api/accounts/' + accountName + '/installs/invoices/?wpe_apikey=devkey';
+
+    return $http.get(invoicesUrl);
+  };
+
+  this.getInvoice = function(accountName, invoiceID) {
+    var invoiceUrl = baseUrl + '/api/accounts/' + accountName + '/installs/invoice?id=' + invoiceID + '&wpe_apikey=devkey';
+
+    return $http.get(invoiceUrl);
+  };
+
   this.getStats = function(accountName, installName) {
     var statsUrl = baseUrl + '/api/accounts/' + accountName + '/installs/' + installName + '/usage?wpe_apikey=devkey';
 
@@ -37,6 +49,12 @@ servicesApp.service('InstallService', function($http) {
 
     return $http.post(backupsUrl);
   };
+
+  this.purgeCache = function(accountName, installName) {
+    var purgeCacheUrl = baseUrl + '/api/accounts/' + accountName + '/installs/' + installName + '/purge_cache?wpe_apikey=devkey';
+    return $http.post(purgeCacheUrl);
+  };
+
 });
 
 
@@ -74,6 +92,12 @@ servicesApp.service('AccountService', function($http) {
         installs: 150,
         visits: '1,000,000+',
         storage: '100-300'
+      },
+      comped: {
+        name: 'Comped',
+        installs: 1,
+        visits: '100,000',
+        storage: 10
       }
     };
 
