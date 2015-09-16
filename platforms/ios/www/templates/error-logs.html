@@ -1,7 +1,6 @@
-<ion-view view-title="Error Logs">
+<ion-view view-title="{{ site.title }} Error Logs">
   <ion-content>
     <h4 class="padding">{{site.title}} Error Logs</h4>
-
     <ion-list>
       <div ng-repeat="error in errors">
         <ion-item class="item-icon-right" href="#/app/sites/{{id}}/error-logs/{{error.id}}" ng-click"$state.go('app.error')">

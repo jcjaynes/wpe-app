@@ -147,7 +147,7 @@ angular.module('wpApp.controllers', [])
 		var url = site.url;
 
 		// Default sections, can be passed in from somewhere else
-		$scope.sitesections = [{'title': { 'rendered': 'Comments' }, 'icon':'ion-ios-chatbubble-outline', 'route':'/wp/v2/comments/' }, {'title': { 'rendered': 'Posts' }, 'icon':'ion-ios-browsers-outline', 'route':'/wp/v2/posts/' },{'title': { 'rendered': 'Pages' }, 'icon':'ion-ios-paper-outline', 'route':'/wp/v2/pages/'}];
+		$scope.sitesections = [{'title': { 'rendered': 'Comments' }, 'icon':'ion-ios-chatbubble', 'route':'/wp/v2/comments/' }, {'title': { 'rendered': 'Posts' }, 'icon':'ion-ios-browsers', 'route':'/wp/v2/posts/' },{'title': { 'rendered': 'Pages' }, 'icon':'ion-ios-paper', 'route':'/wp/v2/pages/'}];
 
 		var dataURL = url + '/wp-json/wp-app/v1/app/?' + $rootScope.callback;
 
@@ -190,7 +190,8 @@ angular.module('wpApp.controllers', [])
   if($rootScope.route) {
     var slug = $rootScope.route.split('/');
     var slugindex = $rootScope.route.split('/').length - 2;
-    $scope.slug = slug[slugindex];
+    $scope.slug = slug[slugindex]
+	$scope.slug = $scope.slug.charAt(0).toUpperCase() + $scope.slug.slice(1);
   }
 
   // Gets API data
@@ -520,7 +521,9 @@ angular.module('wpApp.controllers', [])
 })
 
 //WPEngine Controls
-.controller('AcctCtrl', function($scope, $stateParams, InstallService, SitesDB) {
+.controller('AcctCtrl', function($scope, $localstorage) {
+
+  $scope.account = $localstorage.get('accountName');
 
 })
 
@@ -754,11 +757,11 @@ angular.module('wpApp.controllers', [])
 .controller('StatusFeedCtrl', function($scope, InstallService, Base64, $localstorage, $ionicLoading) { 
 	$scope.open = [];
 	$scope.resolved = [];
-	
-    $ionicLoading.show({
-      template: 'Loading Status...'
-    });
-		
+
+  $ionicLoading.show({
+    template: 'Loading Status...'
+  });
+
 	InstallService.getStatusFeed('https://wpenginestatus.com/feed/').then(function(response) {
 		$scope.data = response.data.responseData.feed.entries;
         angular.forEach( $scope.data, function( value, key ) {
