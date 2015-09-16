@@ -190,7 +190,8 @@ angular.module('wpApp.controllers', [])
   if($rootScope.route) {
     var slug = $rootScope.route.split('/');
     var slugindex = $rootScope.route.split('/').length - 2;
-    $scope.slug = slug[slugindex];
+    $scope.slug = slug[slugindex]
+	$scope.slug = $scope.slug.charAt(0).toUpperCase() + $scope.slug.slice(1);
   }
 
   // Gets API data
