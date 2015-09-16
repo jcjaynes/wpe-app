@@ -1,3 +1,7 @@
+.status {
+	white-space: normal;
+}
+
 .bar.bar-calm {
 	background-color: #40bac8;
 }
