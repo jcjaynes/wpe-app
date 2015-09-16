@@ -1,0 +1,10 @@
+<ion-view view-title="{{ site.title }} Error">
+  <ion-content>
+    <div class="item item-divider">
+      {{ error.date | date: 'medium' }} - {{ error.type }}
+    </div>
+    <div class="item item-text-wrap">
+      <pre>{{ error.description }}</pre>
+ 	  </div>
+  </ion-content>
+</ion-view>

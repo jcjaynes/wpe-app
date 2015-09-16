@@ -1,0 +1,98 @@
+.bar.bar-calm {
+	background-color: #40bac8;
+}
+
+.tabs-calm > .tabs, .tabs.tabs-calm, .tabs-striped.tabs-calm .tabs {
+	background-color: #40bac8;	
+}
+
+.button.button-positive {
+	border-color: #eb6126;
+	background-color: #eb6126;
+}
+
+.button.button-positive.activated {
+	border-color: #de8073;
+	background-color: #de8073;
+}
+
+.item-content p.post-excerpt {
+	white-space: wrap;
+}
+
+.slider {
+  height: 100%;
+}
+.slider-slide {
+  padding-top: 80px;
+  color: #000;
+  background: url('../img/blurry-app-bg.png') no-repeat center top;
+  background-size: cover;
+  text-align: center;
+
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-weight: 300;
+}
+
+.slide-content {
+	position: absolute;
+	bottom: 200px;
+	width: 100%;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+.slide-content h3 {
+	color: #fff;
+	margin-bottom: 40px;
+}
+
+.bar .button.button-icon.site-plus-icon::before, .site-icon::before {
+	font-size: 24px;
+}
+
+.menu-left {
+	background-color: #333;
+}
+
+.menu-left .item {
+	color: #eee;
+	border-color: #555;
+}
+
+.menu-left .item, .menu-left .item-complex .item-content {
+	background-color: transparent;
+}
+
+.card .tabs-secondary {
+	background-color: #fafafa;
+}
+
+.site-avatar {
+	float: left;
+	max-width: 50px;
+	display: block;
+	margin: 0 15px 15px;
+}
+
+.item-body img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+.settings input {
+	width: 100%;
+}
+
+/*** Comments ***/
+
+.pending-item-text {
+	font-size:12px;
+	text-transform: uppercase;
+	color:#999
+}
+
+.card.hold .item-body {
+	background-color: #fef7f1;
+}
