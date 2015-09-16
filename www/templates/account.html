@@ -1,16 +1,21 @@
 <ion-view view-title="Account">
+	<ion-nav-title>
+	{{ account }}
+	</ion-nav-title>
   <ion-content>
+    <img src="img/wpengine-logo-black.png" class="site-avatar" /><h2 class="padding">{{ account }}</h2>
+		<div class="item item-divider">Account Controls</div>
   	<ion-list>
-		<ion-item class="item-icon-left item-icon-right" href="#/app/account/usage/" ng-click"$state.go('app.usage')">
-			<i class="icon ion-pie-graph site-icon"></i>
-			<h3>Plan Usage</h3>
-			<i class="icon ion-chevron-right icon-accessory"></i>
-		</ion-item>
-		<ion-item class="item-icon-left item-icon-right" href="#/app/account/invoices/" ng-click"$state.go('app.invoices')">
-			<i class="icon ion-card site-icon"></i>
-			<h3>View Invoices</h3>
-			<i class="icon ion-chevron-right icon-accessory"></i>
-		</ion-item>
-	</ion-list>
+      <ion-item class="item-icon-left item-icon-right" href="#/app/account/usage/" ng-click"$state.go('app.usage')">
+        <i class="icon ion-pie-graph site-icon"></i>
+        <h3>Plan Usage</h3>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+      <ion-item class="item-icon-left item-icon-right" href="#/app/account/invoices/" ng-click"$state.go('app.invoices')">
+        <i class="icon ion-card site-icon"></i>
+        <h3>View Invoices</h3>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+	  </ion-list>
   </ion-content>
 </ion-view>
